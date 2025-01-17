@@ -12,7 +12,6 @@ const teachers = Teachers({
 export const metadata: Metadata = {
   title: "Booker App — Organize your books to read",
   description: "This app allows you to prioritize your reading.",
-  authors: [{ name: "@shantanuuchak", url: "https://shantanuuchak.tech" }],
 };
 
 export default function RootLayout({
@@ -22,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${teachers.className} antialiased min-h-[2000px]`}>
+      <body className={`${teachers.className} antialiased`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

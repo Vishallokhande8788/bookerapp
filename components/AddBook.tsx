@@ -1,60 +1,52 @@
 "use client";
 
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { Dispatch, FormEvent, useState } from "react";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Cross } from "lucide-react";
+interface AddBookProps {
+  dispatch: Dispatch<Action>;
+}
 
-const FormSchema = z.object({
-  book: z.string().min(3, {
-    message: "Book must be at least 3 characters.",
-  }),
-});
+function AddBook({ dispatch }: AddBookProps) {
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
 
-function AddBook() {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {
-      book: "",
-    },
-  });
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
 
-  function onSubmit() {
-    console.log(form.getValues().book);
-  }
+    dispatch({ type: "add", payload: { title, author } });
+
+    // Empty the input fields
+    setTitle("");
+    setAuthor("");
+  };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
-        <FormField
-          control={form.control}
-          name="book"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Book</FormLabel>
-              <FormControl>
-                <Input placeholder="Add a book" {...field} autoComplete="off" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">
-          <Cross /> Add
+    <form className="flex gap-1 flex-col" onSubmit={handleSubmit}>
+      <Input
+        placeholder="Book title"
+        onChange={(e) => setTitle(e.target.value)}
+        value={title}
+        required
+      />
+      <Input
+        placeholder="Author"
+        onChange={(e) => setAuthor(e.target.value)}
+        value={author}
+        required
+      />
+      <div className="flex gap-1">
+        <Button
+          variant="outline"
+          type="button"
+          onClick={() => dispatch({ type: "sort" })}
+        >
+          Sort
         </Button>
-      </form>
-    </Form>
+        <Button type="submit">Add</Button>
+      </div>
+    </form>
   );
 }
 

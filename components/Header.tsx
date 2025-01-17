@@ -1,5 +1,5 @@
 import { CrownIcon } from "lucide-react";
-import ModeToggle from "./ModeToggle";
+import { ModeToggle } from "./ModeToggle";
 
 function Header() {
   return (

@@ -1,49 +1,17 @@
+import { Dispatch } from "react";
 import SingleBook from "./SingleBook";
 
-function ListBooks() {
-  return (
-    <div className="flex flex-wrap gap-2 justify-center">
-      <SingleBook
-        author="F. Scott Fitzgerald"
-        title="The Great Gatsby"
-        likes={10}
-      />
-      <SingleBook
-        author="F. Scott Fitzgerald"
-        title="The Great Gatsby"
-        likes={10}
-      />
-      <SingleBook
-        author="F. Scott Fitzgerald"
-        title="The Great Gatsby"
-        likes={10}
-      />
-      <SingleBook
-        author="F. Scott Fitzgerald"
-        title="The Great Gatsby"
-        likes={10}
-      />
-      <SingleBook
-        author="F. Scott Fitzgerald"
-        title="The Great Gatsby"
-        likes={10}
-      />
-      <SingleBook
-        author="F. Scott Fitzgerald"
-        title="The Great Gatsby"
-        likes={10}
-      />
+interface ListBooksProps {
+  books: Book[];
+  dispatch: Dispatch<Action>;
+}
 
-      <SingleBook
-        author="F. Scott Fitzgerald"
-        title="The Great Gatsby"
-        likes={10}
-      />
-      <SingleBook
-        author="F. Scott Fitzgerald"
-        title="The Great Gatsby"
-        likes={10}
-      />
+function ListBooks({ books, dispatch }: ListBooksProps) {
+  return (
+    <div className="flex flex-wrap gap-2 justify-center mb-10">
+      {books.map((book: Book) => (
+        <SingleBook key={book.id} book={book} dispatch={dispatch} />
+      ))}
     </div>
   );
 }
